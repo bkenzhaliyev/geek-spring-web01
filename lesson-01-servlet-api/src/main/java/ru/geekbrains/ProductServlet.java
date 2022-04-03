@@ -1,8 +1,5 @@
 package ru.geekbrains;
 
-import ru.geekbrains.persist.Product;
-import ru.geekbrains.persist.ProductRepository;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,8 +57,10 @@ public class ProductServlet extends HttpServlet {
         wr.println("<h1>Список всех товаров</h1>");
         wr.println("<table width=\"80%\" border=\"1\" cellpadding=\"2\" cellspacing=\"0\">");
         wr.println("<tr>");
-        wr.println("<th>Id</th>");
-        wr.println("<th>Наименование</th>");
+        tableHeader(wr, "Id");
+        tableHeader(wr, "Наименование товаров");
+//        wr.println("<th>Id</th>");
+//        wr.println("<th>Наименование</th>");
         wr.println("</tr>");
 
         for (Product product : productRepository.findAll()) {
@@ -96,5 +95,9 @@ public class ProductServlet extends HttpServlet {
         wr.println("</tr>");
 
         wr.println("</table>");
+    }
+
+    public void tableHeader(PrintWriter wr, String title){
+        wr.printf("<th>%s%n</th>\n", title);
     }
 }
