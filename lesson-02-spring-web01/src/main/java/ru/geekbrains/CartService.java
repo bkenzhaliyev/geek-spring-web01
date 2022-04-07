@@ -1,8 +1,6 @@
 package ru.geekbrains;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.geekbrains.persist.Product;
-import ru.geekbrains.persist.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;

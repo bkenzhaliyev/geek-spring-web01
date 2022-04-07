@@ -7,9 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns = "/products/*")
 public class ProductServlet extends HttpServlet {
+    private static final Pattern PARAM_PATTERN = Pattern.compile("\\/(\\d+)");
     private ProductRepository productRepository;
 
     @Override
@@ -32,25 +35,26 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter wr = resp.getWriter();
-        String pathInfo = req.getPathInfo();
-        long productId = 0;
 
-//        resp.getWriter().println("<h1>Привет от сервлета!!!</h1>");
-//        resp.getWriter().println("<p>contextPath: " + req.getContextPath() + "</p>");
-//        resp.getWriter().println("<p>servletPath: " + req.getServletPath() + "</p>");
-//        resp.getWriter().println("<p>pathInfo: " + req.getPathInfo() + "</p>");
-//        resp.getWriter().println("<p>queryString: " + req.getQueryString() + "</p>");
-//        resp.getWriter().println("<p>param1: " + req.getParameter("param1") + "</p>");
-//        resp.getWriter().println("<p>param2: " + req.getParameter("param2") + "</p>");
-
-        if (pathInfo.equals("/productId")) {
-            productId = Long.valueOf(req.getParameter("param1"));
-//            resp.getWriter().println("<h1>Подробные данные по товару, id " + productId + "</h1>");
-            printProductForId(wr, productId);
-        } else {
+        if(req.getPathInfo() == null || req.getPathInfo().equals("/")){
             printAllProducts(wr);
-        }
+        } else {
+            Matcher matcher = PARAM_PATTERN.matcher(req.getPathInfo());
+            if(matcher.matches()){
+                Long id = Long.parseLong(matcher.group(1));
+                Product product = this.productRepository.FindById(id);
+                if (product == null){
+                    resp.getWriter().println("Product not found");
+                    resp.setStatus(404);
+                    return;
+                }
+                printProductForId(wr, id);
+            } else{
+                resp.getWriter().println("Bad parameters...");
+                resp.setStatus(400);
+            }
 
+        }
     }
 
     public void printAllProducts(PrintWriter wr) {
@@ -65,7 +69,7 @@ public class ProductServlet extends HttpServlet {
 
         for (Product product : productRepository.findAll()) {
             wr.println("<tr>");
-            wr.println("<td align=\"center\"><strong><a href='" + "productId?param1=" + product.getId() + "'>"
+            wr.println("<td align=\"center\"><strong><a href='" + product.getId() + "'>"
                     + product.getId() + "</a></strong></td>");
             wr.println("<td>" + product.getTitle() + "</td>");
             wr.println("</tr>");

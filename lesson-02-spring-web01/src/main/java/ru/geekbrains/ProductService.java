@@ -1,8 +1,5 @@
 package ru.geekbrains;
 
-import ru.geekbrains.persist.Product;
-import ru.geekbrains.persist.ProductRepository;
-
 public class ProductService {
     private final ProductRepository productRepository;
 

@@ -2,7 +2,6 @@ package ru.geekbrains;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.geekbrains.persist.Product;
 
 import java.util.Scanner;
 

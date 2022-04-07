@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="lesson-01-servlet-api" />
         <module name="lesson-02-spring-web01" />
+        <module name="lesson-03-spring-mvc" />
       </profile>
     </annotationProcessing>
   </component>

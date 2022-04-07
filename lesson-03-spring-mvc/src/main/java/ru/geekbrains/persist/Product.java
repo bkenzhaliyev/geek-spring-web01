@@ -1,11 +1,11 @@
 package ru.geekbrains.persist;
 
 public class Product {
-    private long id;
+    private Long id;
     private String title;
-    private long cost;
+    private Long cost;
 
-    public Product(int id, String title, long cost) {
+    public Product(Long id, String title, Long cost) {
         this.id = id;
         this.title = title;
         this.cost = cost;
@@ -22,7 +22,7 @@ public class Product {
         this.title = title;
         this.cost = cost;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -30,11 +30,11 @@ public class Product {
         this.title = title;
     }
 
-    public void setCost(long cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -42,7 +42,7 @@ public class Product {
         return title;
     }
 
-    public long getCost() {
+    public Long getCost() {
         return cost;
     }
 }
