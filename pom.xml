@@ -13,6 +13,7 @@
         <module>lesson-01-servlet-api</module>
         <module>lesson-02-spring-web01</module>
         <module>lesson-03-spring-mvc</module>
+        <module>lesson-04-spring-boot</module>
     </modules>
 
 
