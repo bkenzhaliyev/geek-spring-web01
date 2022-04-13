@@ -14,6 +14,7 @@
         <module>lesson-02-spring-web01</module>
         <module>lesson-03-spring-mvc</module>
         <module>lesson-04-spring-boot</module>
+        <module>lesson-05-hibernate</module>
     </modules>
 
 
