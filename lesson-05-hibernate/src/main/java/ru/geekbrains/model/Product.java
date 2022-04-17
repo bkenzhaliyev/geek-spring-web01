@@ -1,6 +1,7 @@
 package ru.geekbrains.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -13,18 +14,33 @@ public class Product {
     @Id
     @GeneratedValue
     @Column(name ="id")
-    private Long id;
+    private long id;
 
     @Column(name ="title")
     private String title;
 
     @Column(name ="cost")
-    private Long cost;
+    private long cost;
 
-    public Product(Long id, String title, Long cost) {
+    @OneToMany(
+            mappedBy = "product",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
+    private List<Order> orders;
+
+    public Product(long id, String title, long cost) {
         this.id = id;
         this.title = title;
         this.cost = cost;
+    }
+
+
+    public Product(long id, String title, long cost, List<Order> orders) {
+        this.id = id;
+        this.title = title;
+        this.cost = cost;
+        this.orders = orders;
     }
 
     public Product() {
@@ -38,7 +54,7 @@ public class Product {
         this.title = title;
         this.cost = cost;
     }
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -46,11 +62,11 @@ public class Product {
         this.title = title;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(long cost) {
         this.cost = cost;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -58,8 +74,16 @@ public class Product {
         return title;
     }
 
-    public Long getCost() {
+    public long getCost() {
         return cost;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override

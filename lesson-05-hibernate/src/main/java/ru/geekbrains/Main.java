@@ -3,7 +3,7 @@ package ru.geekbrains;
 import ru.geekbrains.model.Product;
 
 import org.hibernate.cfg.Configuration;
-import ru.geekbrains.model.Product;
+import ru.geekbrains.model.ProductRepository;
 
 import javax.persistence.EntityManagerFactory;;import java.util.List;
 import java.util.Optional;
@@ -27,10 +27,13 @@ public class Main {
 
 //        pr.delete(5);
 
-        Product product = productList.get(7);
-        product.setTitle("Pineapple");
-        product.setCost(2250L);
-        pr.update(product);
+        Product product = productList.get(8);
+        if(product != null){
+            product.setTitle("Pineapple");
+            product.setCost(2250L);
+            pr.update(product);
+        }
+
 
     }
 }

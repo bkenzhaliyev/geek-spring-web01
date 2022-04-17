@@ -1,12 +1,15 @@
-package ru.geekbrains;
+package ru.geekbrains.model;
 
 import org.springframework.stereotype.Repository;
+import ru.geekbrains.model.Customer;
 import ru.geekbrains.model.Product;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Repository
 public class ProductRepository {
@@ -27,43 +30,51 @@ public class ProductRepository {
     }
 
     public List<Product> findAll() {
-        EntityManager em = eFactory.createEntityManager();
-        try {
-            List<Product> productList = em.createNamedQuery("findAll", Product.class).getResultList();
-            return productList;
-        } finally {
-            em.close();
-        }
+        return executeForEntityManager(
+                em -> em.createNamedQuery("findAll", Product.class).getResultList()
+        );
     }
 
     public void delete(long id) {
-        EntityManager em = eFactory.createEntityManager();
-        try {
+        executeInTransaction(em -> {
             Product product = em.find(Product.class, id);
             if (product != null) {
-                em.getTransaction().begin();
                 em.remove(product);
-                em.getTransaction().commit();
             }
-        } catch (Exception ex) {
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
+        });
     }
 
     public void update(Product product){
+        executeInTransaction(em -> em.merge(product));
+    }
+
+    public void insert(Product product) {
+        executeInTransaction(em -> em.persist(product));
+    }
+
+    private <R> R executeForEntityManager(Function<EntityManager, R> function) {
         EntityManager em = eFactory.createEntityManager();
         try {
-              if (product != null) {
-                em.getTransaction().begin();
-                em.merge(product);
-                em.getTransaction().commit();
+            return function.apply(em);
+        } finally {
+            if (em != null) {
+                em.close();
             }
+        }
+    }
+
+    private void executeInTransaction(Consumer<EntityManager> consumer) {
+        EntityManager em = eFactory.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            consumer.accept(em);
+            em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
         } finally {
-            em.close();
+            if (em != null) {
+                em.close();
+            }
         }
     }
 }
