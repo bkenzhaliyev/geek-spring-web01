@@ -1,24 +1,28 @@
 package ru.geekbrains.persist;
 
-public class Product {
-    private Long id;
-    private String title;
-    private Long cost;
+import javax.persistence.*;
+import java.util.Objects;
 
-    public Product(Long id, String title, Long cost) {
-        this.id = id;
-        this.title = title;
-        this.cost = cost;
-    }
+@Entity
+@Table(name = "products")
+public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column
+    private Long cost;
 
     public Product() {
     }
 
-    public Product(String title) {
-        this.title = title;
-    }
-
     public Product(String title, long cost) {
+        this.id = id;
         this.title = title;
         this.cost = cost;
     }
@@ -45,4 +49,18 @@ public class Product {
     public Long getCost() {
         return cost;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id.equals(product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

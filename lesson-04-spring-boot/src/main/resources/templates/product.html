@@ -39,6 +39,29 @@
             <a class="btn btn-primary" th:href="@{/product/new}">Add products</a>
         </div>
 
+        <div class="col-12 mt-3">
+            <form class="form-inline">
+                <div class="form-group mb-2 mr-2">
+                    <label for="productFilter" class="sr-only">Title filter</label>
+                    <input type="text" class="form-control" id="productFilter" th:value="${param.productFilter}"
+                           name="productFilter" placeholder="Title filter">
+                </div>
+
+                <div class="form-group mb-2 mr-2">
+                    <label for="costMinFilter" class="sr-only">Minimum cost's</label>
+                    <input type="text" class="form-control" id="costMinFilter" th:value="${param.costMinFilter}"
+                           name="costMinFilter" placeholder="Minimum cost's">
+                </div>
+
+                <div class="form-group mb-2 mr-2">
+                    <label for="costMaxFilter" class="sr-only">Maximum cost's</label>
+                    <input type="text" class="form-control" id="costMaxFilter" th:value="${param.costMaxFilter}"
+                           name="costMaxFilter" placeholder="Maximum cost's">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Apply</button>
+            </form>
+        </div>
+
         <div class="col-12">
             <table class="table table-bordered my-2">
                 <thead>
@@ -50,6 +73,7 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <tr th:each="product : ${product}">
                     <th scope="row" th:text="${product.id}">1</th>
                     <td th:text="${product.title}">Product tile</td>
@@ -62,6 +86,11 @@
                         </form>
                     </td>
                 </tr>
+<!--                <tr th:if="${product.isEmpty()}">-->
+<!--                    <td  colspan="4">-->
+<!--                        No data-->
+<!--                    </td>-->
+<!--                </tr>-->
                 </tbody>
             </table>
         </div>
