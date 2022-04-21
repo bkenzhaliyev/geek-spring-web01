@@ -1,30 +1,25 @@
-package ru.geekbrains.persist;
+package ru.geekbrains.dto;
 
 import javax.persistence.*;
-import java.util.Objects;
+//import javax.validation.contraints.NotBlank;
 
-@Entity
-@Table(name = "products")
-public class Product {
+public class ProductDto {
 
-    @Id
-    @GeneratedValue
     private long id;
 
-    @Column(nullable = false)
     private String title;
 
-    @Column
     private long cost;
 
-    public Product() {
+    public ProductDto() {
     }
 
-    public Product(long id, String title, long cost) {
+    public ProductDto(long id, String title, long cost) {
         this.id = id;
         this.title = title;
         this.cost = cost;
     }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -37,7 +32,7 @@ public class Product {
         this.cost = cost;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -45,8 +40,7 @@ public class Product {
         return title;
     }
 
-    public Long getCost() {
+    public long getCost() {
         return cost;
     }
-
 }

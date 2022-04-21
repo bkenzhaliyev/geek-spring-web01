@@ -2,18 +2,13 @@ package ru.geekbrains.persist;
 
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class ProductRepositoryImpl implements ProductRepository {
+public class ProductRepositoryImpl implements ProductRepository2 {
 
     @PersistenceContext
     EntityManager em;
