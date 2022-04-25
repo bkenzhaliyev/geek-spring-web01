@@ -36,7 +36,6 @@ public class ProductRepositoryImpl implements ProductRepository2 {
     @Transactional
     public Product save(Product product) {
         if (product.getId() == null) {
-            System.out.println("new product id = " + product.getId());
             em.persist(product);
         } else {
             em.merge(product);

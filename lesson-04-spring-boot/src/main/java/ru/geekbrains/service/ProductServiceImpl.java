@@ -29,7 +29,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDto> findProductByFilter(String productFilter, Long costMinFilter, Long costMaxFilter, Integer page, Integer size, String sortField) {
+    public Page<ProductDto> findProductByFilter(String productFilter,
+                                                Long costMinFilter,
+                                                Long costMaxFilter,
+                                                Integer page,
+                                                Integer size,
+                                                String sortField) {
         Specification<Product> spec = Specification.where(null);
 
         if(productFilter != null){
@@ -44,12 +49,9 @@ public class ProductServiceImpl implements ProductService {
             spec = spec.and(ProductSpecifications.maxCost(costMaxFilter));
         }
 
-        return productRepository.findAll(spec, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,sortField)))
+        return productRepository.findAll(spec, PageRequest.of(page, size, Sort.by(sortField)))
                 .map(ProductServiceImpl::productToDto);
 
-//        return productRepository.findAll(spec).stream()
-//                .map(ProductServiceImpl::productToDto)
-//                .collect(Collectors.toList());
     }
 
     @Override

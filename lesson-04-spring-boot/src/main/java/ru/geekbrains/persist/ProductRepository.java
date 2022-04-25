@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
             "where (p.title like :productname or :productname is null) and " +
             "      (p.cost >= :minCost or :minCost is null) and " +
             "      (p.cost <= :maxCost or :maxCost is null)")
-    List<Product> findWithFilter(@Param("productname") String productFilter,
+    List<Product> findWithFilter(@Param("productname") String productname,
                                  @Param("minCost") Long minCost,
                                  @Param("maxCost") Long maxCost);
 

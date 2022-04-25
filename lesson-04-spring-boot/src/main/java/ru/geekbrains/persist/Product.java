@@ -9,23 +9,23 @@ public class Product {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String title;
 
     @Column
-    private long cost;
+    private Long cost;
 
     public Product() {
     }
 
-    public Product(long id, String title, long cost) {
+    public Product(Long id, String title, Long cost) {
         this.id = id;
         this.title = title;
         this.cost = cost;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,7 +33,7 @@ public class Product {
         this.title = title;
     }
 
-    public void setCost(long cost) {
+    public void setCost(Long cost) {
         this.cost = cost;
     }
 

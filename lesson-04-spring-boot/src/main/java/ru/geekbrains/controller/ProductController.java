@@ -31,7 +31,6 @@ public class ProductController {
                            @RequestParam Optional<Integer> page,
                            @RequestParam Optional<Integer> size,
                            @RequestParam("sortField") Optional<String> sortField,
-//                           @RequestParam("sortField") Optional<String> sortField,
                            Model model) {
 
         String productFilterValue = productFilter
@@ -39,15 +38,19 @@ public class ProductController {
                 .orElse(null);
 
         Integer pageValue = page.orElse(1) - 1;
-        Integer sizeValue = size.orElse(3);
+        Integer sizeValue = size.orElse(5);
 
+        String sortFieldValue = sortField
+                .filter(s -> !s.isBlank())
+                .orElse("id");
+//        System.out.println("ProductController  - sort value for field: " + sortFieldValue );
         model.addAttribute("product", productService.findProductByFilter(
                 productFilterValue,
                 costMinFilter.orElse(null),
                 costMaxFilter.orElse(null),
                 pageValue,
                 sizeValue,
-                sortField.orElse("id")));
+                sortFieldValue));
         return "product";
     }
 
